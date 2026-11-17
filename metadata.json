@@ -1,0 +1,6 @@
+{
+  "name": "MERI SCHOOL DIARY",
+  "description": "Digital School Diary and School Management Application for Sindh schools and colleges with role-based portals for parents, teachers, students, and administrators.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

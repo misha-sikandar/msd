@@ -1,0 +1,1274 @@
+# MASTER PROJECT PROMPT
+# MERI SCHOOL DIARY — Complete School Management & Digital Diary Application
+
+## 1. YOUR ROLE
+
+Act as a senior Flutter developer, software architect, UI/UX designer, database designer, and QA engineer.
+
+Your responsibility is to design and develop a complete, functional, production-quality prototype of an application named **MERI SCHOOL DIARY**.
+
+Do not build only static screens or a visual demonstration. Build a connected application with functional navigation, role-based experiences, working forms, data management, validations, relationships, and persistent local data.
+
+Follow the requirements in this document carefully. Do not invent additional features or change the approved product direction.
+
+If working inside an existing repository:
+- Inspect the project before making changes.
+- Understand the existing architecture and files.
+- Preserve working functionality.
+- Reuse existing components and packages where appropriate.
+- Never overwrite or delete unrelated files.
+- Ask for approval before changing files outside the approved scope.
+
+---
+
+# 2. PROJECT OVERVIEW
+
+**Product Name:** MERI SCHOOL DIARY
+
+**Product Type:** Digital School Diary and School Management Application.
+
+**Primary Target:** Government schools and colleges in Sindh, Pakistan.
+
+### Problem
+
+Many schools still depend on physical diaries and manual registers.
+
+This creates several problems:
+
+- Parents cannot easily track their children's daily school activities.
+- Students sometimes forget homework and important announcements.
+- Teachers maintain attendance, homework, tests, and daily records manually.
+- Parents have limited visibility into what actually happened during the school day.
+- Administrators struggle to maintain organized school records and generate reports.
+- Important school information is scattered across registers, notebooks, and verbal communication.
+
+### Proposed Solution
+
+MERI SCHOOL DIARY provides one centralized digital platform where parents, teachers, students, and school administrators can access and manage relevant school information.
+
+The application should make school communication and daily record management simpler, more organized, and accessible.
+
+### Main Product Goal
+
+Create a simple, reliable, low-bandwidth-friendly digital school diary that can eventually be adopted by government schools and colleges in Sindh.
+
+The application should be understandable even for users with limited technical experience.
+
+---
+
+# 3. TARGET USERS AND ROLES
+
+The application must support four roles.
+
+1. Parent / Guardian
+2. Teacher
+3. Student
+4. School Admin
+
+Each role must have its own dashboard, navigation, permissions, and relevant features.
+
+For the initial prototype, role selection is a local demo mechanism, not real authentication or a security boundary.
+
+## 3.1 Parent / Guardian
+
+Parents should be able to monitor their children's school activities.
+
+### Features
+
+**A. Parent Dashboard**
+- Welcome message.
+- Active child information.
+- Child switcher for parents with multiple children.
+- Today's attendance.
+- Pending homework.
+- Recent daily timeline updates.
+- Upcoming tests.
+- Important announcements.
+- Upcoming holidays.
+
+**B. Multiple Children**
+- One parent can have multiple children.
+- Children may belong to different classes and sections.
+- Parent can switch between children.
+- All parent information must be scoped to the currently selected child.
+- Switching children must update all relevant screens and records.
+
+**C. Attendance**
+- View daily attendance.
+- Present, absent, late, and approved leave statuses.
+- Monthly attendance summary.
+- Attendance history.
+- Missing attendance records should clearly show "Not recorded yet".
+- Holidays and weekends must be distinguished from missing records.
+
+**D. Homework**
+- View assigned homework and classwork.
+- Subject name.
+- Teacher name where available.
+- Assignment instructions.
+- Assigned date.
+- Due date.
+- Submission status.
+- Late submission indicator.
+- Teacher feedback after checking.
+
+**E. My School Day**
+- View the actual daily school timeline.
+- See what happened in each period.
+- See subject-wise updates.
+- View teacher notes.
+- Identify missing period updates.
+- See substitute teacher information.
+- View end-of-day reports.
+- Browse previous school days.
+
+**F. Tests and Results**
+- Upcoming test schedule.
+- Subject-wise marks.
+- Obtained marks and total marks.
+- Results history.
+
+**G. Timetable**
+- View the planned weekly timetable.
+- Clearly distinguish planned timetable from actual daily activity.
+
+**H. Leave Applications**
+- Submit leave for an individual child.
+- Select start date and end date.
+- Provide a reason.
+- View submitted, approved, and rejected status.
+- View teacher feedback where applicable.
+- Parents with multiple children must submit leave for the selected child only.
+
+**I. Announcements**
+- View school-wide announcements.
+- Read announcement title, description, and date.
+
+---
+
+## 3.2 Teacher
+
+Teachers should be able to manage their assigned classes and academic activities.
+
+### Features
+
+**A. Teacher Dashboard**
+- Welcome message.
+- Assigned classes and sections.
+- Today's attendance status.
+- Pending homework checking.
+- Daily timeline updates.
+- Upcoming tests.
+- Pending leave applications.
+
+**B. Assigned Classes**
+- View assigned sections.
+- View subjects taught in each section.
+- View students in assigned sections.
+- Do not allow teachers to access unrelated sections through normal workflows.
+
+**C. Attendance Management**
+- Select assigned class and section.
+- Select school date.
+- View student list.
+- Mark each student as:
+  - Present
+  - Absent
+  - Late
+  - On Leave
+- Save attendance.
+- Edit attendance where permitted.
+- Prevent accidental duplicate daily attendance records.
+- Clearly indicate attendance that has not yet been recorded.
+
+Only the class teacher should manage daily class attendance in the initial prototype.
+
+**D. Homework and Classwork**
+- Create assignments.
+- Select class and section.
+- Select subject.
+- Enter assignment title.
+- Enter instructions.
+- Set assignment date.
+- Set due date.
+- View student submission status.
+- Mark submissions as checked.
+- Provide feedback.
+- Identify late submissions.
+
+Submission workflow:
+
+Pending → Submitted → Checked
+
+Student submissions in V1 support an optional text note only. File uploads are not included.
+
+**E. My School Day — Daily Timeline**
+
+This is one of the most important features of the application.
+
+Teachers must be able to record what actually happened during the school day.
+
+For each period, the teacher can enter:
+
+- Date.
+- Period number or time.
+- Subject.
+- Class and section.
+- What was taught or covered.
+- Optional additional notes.
+- Teacher identity.
+
+Teachers can:
+- Add updates for today's school day.
+- Add updates for previous school days.
+- Edit existing updates.
+- Add updates when they forgot to record something earlier.
+- Record substitute teacher activity.
+- Add an optional end-of-day report.
+
+Important rules:
+- Every edit must preserve a modification timestamp.
+- Late and backdated entries must be visibly identified.
+- Substitute teacher entries must identify the substitute teacher.
+- Missing periods must display "No update recorded".
+- Do not fabricate timeline entries.
+- Show only actual recorded activity.
+- Homework assigned during a period may appear as a related timeline item.
+
+**F. Tests**
+- Create tests.
+- Select class, section, and subject.
+- Set test date.
+- Enter maximum marks.
+- Enter obtained marks for individual students.
+- Edit marks where permitted.
+- Parents and students can view published results.
+
+**G. Leave Management**
+- View leave applications from assigned classes.
+- Review reason and dates.
+- Approve or reject applications.
+- Record decision status.
+- Approved leave must reflect in attendance.
+
+---
+
+## 3.3 Student
+
+Students should have a simple personal school diary.
+
+### Features
+
+**A. Student Dashboard**
+- Welcome message.
+- Today's attendance.
+- Today's timeline.
+- Pending homework.
+- Upcoming tests.
+- Recent announcements.
+
+**B. My School Day**
+- View actual daily school activity.
+- Subject-wise period updates.
+- Teacher notes.
+- Missing updates.
+- End-of-day report.
+- Previous school day history.
+
+**C. Homework**
+- View homework and classwork.
+- Read instructions.
+- See due dates.
+- Mark homework as submitted.
+- Add an optional text note.
+- See checking status and teacher feedback.
+- Identify late submissions.
+
+**D. Timetable**
+- View weekly planned timetable.
+- Distinguish it from actual daily activity.
+
+**E. Attendance**
+- View daily attendance.
+- View attendance history.
+- View monthly summaries.
+
+**F. Exams and Results**
+- Upcoming test schedule.
+- Subject-wise results.
+- Obtained marks.
+- Maximum marks.
+- Result history.
+
+**G. Announcements**
+- View school-wide announcements.
+
+---
+
+## 3.4 School Admin
+
+The administrator manages the school's structure and records.
+
+### Features
+
+**A. Admin Dashboard**
+Display useful summary cards:
+
+- Total students.
+- Total teachers.
+- Total classes.
+- Total sections.
+- Total subjects.
+- Today's attendance summary.
+- Upcoming holidays.
+- Recent announcements.
+- Quick actions.
+
+**B. School Profile**
+Manage:
+- School name.
+- Address.
+- City.
+- Telephone.
+- Principal name.
+- Academic years.
+
+**C. Class Management**
+- Add classes.
+- Edit classes.
+- View classes.
+- Manage class ordering.
+- View associated sections.
+
+**D. Section Management**
+- Add sections.
+- Edit sections.
+- Assign class teacher.
+- View students.
+- View teacher assignments.
+
+**E. Student Management**
+- Add students.
+- Edit student information.
+- Assign admission number.
+- Assign roll number.
+- Assign class and section.
+- Link guardian.
+- View student details.
+- Search students.
+- Filter students.
+- Deactivate or reactivate students.
+
+**F. Teacher Management**
+- Add teachers.
+- Edit teacher information.
+- Assign designation.
+- Manage phone numbers.
+- Activate or deactivate teachers.
+- View assigned subjects and sections.
+
+**G. Subject Management**
+- Add subjects.
+- Edit subjects.
+- Assign subject codes.
+- View subject assignments.
+
+**H. Teacher Assignments**
+- Assign teachers to subjects and sections.
+- Edit assignments.
+- Remove assignments.
+- Prevent invalid or duplicate assignments.
+
+**I. School Calendar**
+- Monthly calendar view.
+- Add school holidays.
+- Add half-days.
+- Add school events.
+- Edit calendar events.
+- Delete calendar events.
+- Support multi-day holidays.
+- Display relevant calendar information to all roles.
+
+**J. Announcements**
+- Create school-wide announcements.
+- Edit announcements.
+- Publish announcements.
+- View announcement history.
+
+**K. Reports**
+- Attendance reports.
+- Class-wise attendance summaries.
+- Student-wise attendance summaries.
+- Academic performance reports.
+- Test result summaries.
+- Student and teacher counts.
+
+**L. Reset Demo Data**
+- Provide a reset option.
+- Ask for confirmation.
+- Restore the original sample dataset.
+- Clear demo modifications safely.
+
+---
+
+# 4. FLAGSHIP FEATURE — MY SCHOOL DAY
+
+The most distinctive feature of MERI SCHOOL DIARY must be the **My School Day** timeline.
+
+Do not treat this as an ordinary timetable.
+
+### Timetable vs My School Day
+
+Timetable = What was planned to happen.
+
+My School Day = What actually happened.
+
+These must be separate features.
+
+### Example
+
+A school day may look like this:
+
+08:00 – 08:40 | English
+Teacher recorded: Chapter 4 reading and vocabulary.
+
+08:40 – 09:20 | Mathematics
+Teacher recorded: Fractions exercises completed.
+
+09:20 – 10:00 | Science
+No update recorded.
+
+10:00 – 10:20 | Break
+
+10:20 – 11:00 | Computer Education
+Substitute teacher recorded: Introduction to computer networks.
+
+11:00 – 11:40 | Urdu
+Teacher recorded: Essay writing practice.
+
+End of Day:
+Students completed assigned classwork and received Mathematics homework.
+
+### Timeline UI Requirements
+
+- Vertical timeline.
+- Clear time labels.
+- Subject icons or simple visual markers.
+- Teacher name.
+- Period update content.
+- Missing update indicators.
+- Substitute teacher labels.
+- Edited/backdated indicators.
+- End-of-day report section.
+- Date navigation.
+- Today and previous-day views.
+- Responsive layout.
+
+The timeline must visually stand out from other dashboard modules.
+
+---
+
+# 5. SCHOOL STRUCTURE AND DATA RELATIONSHIPS
+
+Use a clean domain model.
+
+### Main Entities
+
+1. School
+2. AcademicYear
+3. SchoolClass
+4. Section
+5. Student
+6. Guardian
+7. Teacher
+8. Subject
+9. TeacherAssignment
+10. SchoolCalendarEvent
+11. TimetableSlot
+12. AttendanceRecord
+13. HomeworkItem
+14. HomeworkSubmission
+15. TimelineUpdate
+16. EndOfDayReport
+17. Test
+18. TestResult
+19. LeaveApplication
+20. Announcement
+21. DemoUser / DemoSession
+
+### Relationship Rules
+
+- One school can have multiple academic years.
+- One class can contain multiple sections.
+- One section belongs to one class.
+- One section can contain multiple students.
+- One guardian can be linked to multiple students.
+- A student belongs to one section.
+- Teachers can teach multiple subjects and sections.
+- A teacher assignment connects one teacher, one subject, and one section.
+- Students have individual attendance, homework, results, and leave records.
+- Calendar events are school-wide.
+
+Use stable string IDs and consistent relationships.
+
+Do not duplicate class information on Student when it can be derived from Section.
+
+### Unique Constraints
+
+- Student admission number must be unique.
+- Student roll number must be unique within its section.
+- A student should not have duplicate daily attendance records.
+- Avoid duplicate teacher-subject-section assignments.
+- Prevent duplicate leave applications for overlapping dates where applicable.
+- Only one academic year can be current.
+
+---
+
+# 6. APPROVED SAMPLE DATASET
+
+Create realistic fictional Pakistani sample data.
+
+Initial prototype should contain:
+
+- 1 government school in Latifabad, Hyderabad, Sindh.
+- 2 classes: Class 6 and Class 7.
+- 3 sections: 6-A, 6-B, 7-A.
+- Approximately 10 students in each section.
+- Approximately 6 teachers.
+- 8 subjects.
+- 24 teacher assignments.
+- At least one parent/guardian linked to two children in different sections.
+- 2 academic years: 2025–26 and 2026–27.
+
+### Subjects
+
+- Sindhi
+- Urdu
+- English
+- Mathematics
+- Science
+- Islamiat
+- Social Studies
+- Computer Education
+
+### Historical Data
+
+Provide 2–3 weeks of realistic school records relative to the current date.
+
+Include:
+- Attendance records.
+- Homework.
+- Homework submissions.
+- Timeline updates.
+- Tests and results.
+- Leave applications.
+- Announcements.
+- Calendar events.
+
+Include gaps in historical attendance and timeline records.
+
+Also include:
+- One holiday.
+- One half-day.
+- One substitute-teacher day.
+
+Do not fill every day with artificial data. The application must demonstrate missing records correctly.
+
+All sample names and contact details must be fictional.
+
+Use Asia/Karachi date conventions.
+
+Academic year 2026–27:
+April 1, 2026 – March 31, 2027.
+
+---
+
+# 7. SCHOOL DATA AND DELETE POLICIES
+
+Implement conservative record deletion.
+
+- Students: deactivate/reactivate instead of hard deletion.
+- Teachers: deactivate; prevent hard deletion while assignments exist.
+- Classes: prevent deletion while sections exist.
+- Sections: prevent deletion while students exist.
+- Subjects: prevent deletion while assignments exist.
+- Teacher assignments: deletable with confirmation.
+- Calendar events: deletable with confirmation.
+- Current academic year: cannot be deleted.
+- School profile: edit only.
+
+Show understandable error messages when an operation is blocked.
+
+These rules must be enforced in the domain/repository layer, not only hidden in the UI.
+
+---
+
+# 8. TECHNOLOGY STACK
+
+Use Flutter and Dart.
+
+### Frontend
+- Flutter.
+- Material Design 3.
+- Responsive Flutter Web interface.
+- Android compatibility maintained.
+- Riverpod for state management.
+- GoRouter for navigation.
+- Feature-first architecture.
+- Reusable widgets and components.
+
+### Approved Package Versions
+
+Use the existing approved dependencies:
+
+- flutter_riverpod: ^3.5.0
+- go_router: ^18.1.2
+- shared_preferences: ^2.5.6
+- intl: ^0.20.3
+
+Do not add packages without explaining:
+1. Why the package is needed.
+2. Which feature requires it.
+3. Its maintenance and compatibility.
+4. Its Web and Android compatibility.
+5. Why existing packages are insufficient.
+
+Wait for approval before adding dependencies.
+
+---
+
+# 9. ARCHITECTURE
+
+Use feature-first architecture.
+
+Suggested structure:
+
+lib/
+  app/
+    app.dart
+    router.dart
+    route_names.dart
+    theme.dart
+    theme_mode_controller.dart
+
+  core/
+    widgets/
+    constants/
+    utilities/
+
+  features/
+    demo_auth/
+      domain/
+      data/
+      presentation/
+
+    dashboard/
+      presentation/
+
+    school_structure/
+      domain/
+      data/
+      presentation/
+
+    attendance/
+      domain/
+      data/
+      presentation/
+
+    homework/
+      domain/
+      data/
+      presentation/
+
+    timetable/
+      domain/
+      data/
+      presentation/
+
+    my_school_day/
+      domain/
+      data/
+      presentation/
+
+    exams/
+      domain/
+      data/
+      presentation/
+
+    leave/
+      domain/
+      data/
+      presentation/
+
+    announcements/
+      domain/
+      data/
+      presentation/
+
+    school_admin/
+      presentation/
+
+### Architecture Rules
+
+- Keep domain entities independent of Flutter UI.
+- Keep business rules out of widgets.
+- Use repository contracts.
+- Use local repository implementations.
+- Use Riverpod for dependency injection and reactive state.
+- Use GoRouter for navigation.
+- Avoid unnecessary abstractions.
+- Do not introduce code generation unless explicitly approved.
+- Use reusable widgets.
+- Keep feature boundaries clear.
+
+Architecture direction:
+
+Presentation → Domain ← Data
+
+---
+
+# 10. DATA STORAGE AND OFFLINE SUPPORT
+
+The initial application must work completely offline.
+
+### Local Persistence
+
+Use SharedPreferencesAsync with a schema-versioned JSON snapshot for the school dataset.
+
+Storage key:
+
+app.school_data.v1
+
+Requirements:
+
+- Seed data loads on first launch.
+- Changes survive browser refresh.
+- Data can be reset to original demo values.
+- Corrupt or unsupported snapshots should safely fall back to seed data.
+- Keep storage logic separate from UI.
+- Use a codec for serialization and deserialization.
+- Provide clean repository interfaces so a backend can be introduced in a future version.
+
+Use storage compatible with Flutter Web and Android.
+
+### Demo Session
+
+- Local role selection.
+- No email/password.
+- No real authentication.
+- Demo session is in memory.
+- Refreshing the browser returns to role selection.
+
+---
+
+# 11. UI/UX DESIGN SYSTEM
+
+The application should look modern, clean, professional, and premium.
+
+### Overall Visual Direction
+
+- Modern minimal design.
+- Purple and lavender color palette.
+- Material Design 3.
+- Light and dark modes.
+- Balanced spacing.
+- Readable typography.
+- Rounded cards.
+- Subtle animations.
+- Accessible contrast.
+
+### Theme
+
+Use Material 3 ColorScheme generated from purple seed:
+
+0xFF6750A4
+
+Support:
+- System mode.
+- Light mode.
+- Dark mode.
+
+Persist the selected theme preference.
+
+### Layout
+
+Desktop and tablet:
+- Responsive sidebar/navigation rail.
+- Main content area.
+- Header with page title.
+- Profile area.
+- Theme toggle.
+
+Mobile:
+- Role-specific bottom navigation.
+- Compact header.
+- Scrollable content.
+- Mobile-friendly cards and forms.
+
+### Screen Design
+
+- Cards: approximately 14–16 px radius.
+- Consistent spacing: 4, 8, 16, 24, 32.
+- Minimum touch target: 48 × 48.
+- Consistent buttons, forms, badges, dialogs, and tables.
+- Clear empty states.
+- Clear loading states.
+- Clear error states.
+- Clear success feedback.
+- Avoid unnecessary visual clutter.
+
+### Responsive Requirements
+
+Support:
+- Mobile.
+- Tablet.
+- Desktop.
+
+Tables should adapt to smaller screens using compact cards or suitable responsive layouts.
+
+Do not allow horizontal overflow or overlapping controls.
+
+### Accessibility
+
+- Readable text.
+- Proper contrast.
+- Clear labels.
+- Large touch targets.
+- Understandable messages.
+- Simple navigation.
+- Avoid relying on color alone to communicate statuses.
+
+UI language: English.
+
+Keep architecture ready for future Urdu/Sindhi and RTL support, but translations are not part of V1.
+
+---
+
+# 12. NAVIGATION AND ROLE ACCESS
+
+Provide a role-specific application experience.
+
+### Parent Navigation
+- Home
+- My Children
+- Attendance
+- Homework
+- My School Day
+- More
+
+### Teacher Navigation
+- Dashboard
+- Classes
+- Attendance
+- Homework
+- My School Day
+- More
+
+### Student Navigation
+- Home
+- My School Day
+- Homework
+- Timetable
+- Results
+- More
+
+### Admin Navigation
+- Overview
+- Students
+- Teachers
+- Classes
+- More
+
+Admin More menu:
+- Subjects
+- Teacher Assignments
+- School Calendar
+- Announcements
+- Reports
+- School Profile
+- Reset Demo Data
+
+Use responsive navigation suitable for mobile, tablet, and desktop.
+
+Protect role-specific navigation from accidental cross-role access in the demo application. Remember that local demo access is not real security.
+
+---
+
+# 13. VALIDATION AND BUSINESS RULES
+
+Every form must have suitable validation.
+
+Examples:
+
+- Required fields cannot be empty.
+- Invalid dates must be rejected.
+- Due date should not be before assignment date.
+- Obtained marks cannot exceed maximum marks.
+- Duplicate roll numbers within the same section are not allowed.
+- Duplicate admission numbers are not allowed.
+- A teacher cannot be assigned to a nonexistent section or subject.
+- Approved leave should reflect in attendance.
+- Parent records must only show linked children.
+- Deactivated students should not appear in new active class workflows.
+- A missing attendance record must not be automatically interpreted as absent.
+- A holiday must not be treated as an ordinary school day.
+
+Show friendly, actionable validation messages.
+
+---
+
+# 14. REPORTING AND DASHBOARDS
+
+Provide useful summaries without overwhelming the user.
+
+### Parent
+- Attendance percentage.
+- Homework pending count.
+- Upcoming tests.
+- Recent timeline activity.
+
+### Teacher
+- Class attendance summary.
+- Pending homework checks.
+- Upcoming tests.
+- Pending leave applications.
+
+### Student
+- Homework pending.
+- Attendance history.
+- Upcoming tests.
+- Recent school activity.
+
+### Admin
+- Total students.
+- Total teachers.
+- Classes and sections.
+- Subject counts.
+- Attendance summary.
+- Academic performance.
+- School calendar overview.
+
+Use lightweight Flutter-native charts or simple summary cards. Do not add chart packages without approval.
+
+---
+
+# 15. OUT OF SCOPE — STRICTLY EXCLUDED FROM V1
+
+Do not implement the following:
+
+- AI integrations.
+- Chatbots or AI assistants.
+- Firebase.
+- Supabase.
+- Backend servers.
+- REST APIs.
+- Cloud databases.
+- Real authentication.
+- Parent-teacher messaging.
+- File uploads.
+- Photo uploads.
+- Homework attachments.
+- Push notifications.
+- Email/SMS notifications.
+- Online payments.
+- External analytics or telemetry.
+- Multi-school support.
+- Urdu/Sindhi translations.
+- Backend synchronization.
+- Learning-material management.
+- Leave withdrawal.
+
+Do not add these features just because they seem useful.
+
+---
+
+# 16. DEVELOPMENT METHODOLOGY
+
+Build the application in controlled phases.
+
+Do not attempt to implement the entire application in one uncontrolled operation.
+
+### Phase 1 — Project Foundation
+- Flutter project setup.
+- Material 3 theme.
+- Light/dark theme.
+- Theme persistence.
+- GoRouter.
+- Riverpod.
+- Demo role selection.
+- Placeholder dashboards.
+- Basic tests.
+
+### Phase 2 — Design Foundation
+- Purple/lavender design system.
+- Responsive layouts.
+- Reusable components.
+- Theme toggle.
+- Shared UI standards.
+
+### Phase 3 — School Structure and Sample Data
+- Domain entities.
+- Guardian relationships.
+- School structure.
+- Sample data.
+- Snapshot codec.
+- Data integrity tests.
+
+### Phase 4 — Local Store and Repositories
+- Local persistence.
+- Repository contracts.
+- Local repository implementations.
+- Reactive providers.
+- Reset demo data.
+
+### Phase 5 — Admin Application
+- Admin shell.
+- Overview dashboard.
+- School profile.
+- Classes and sections.
+- Student management.
+- Teacher management.
+- Subjects.
+- Teacher assignments.
+- School calendar.
+- Announcements.
+- Reports.
+
+### Phase 6 — Demo Role Experiences
+- Parent dashboard.
+- Teacher dashboard.
+- Student dashboard.
+- Role-specific navigation.
+- Parent child switching.
+- Demo session handling.
+
+### Phase 7 — Attendance
+- Teacher attendance workflow.
+- Parent/student attendance views.
+- Attendance summaries.
+- Admin reports.
+- Holiday and leave integration.
+
+### Phase 8 — Homework and Classwork
+- Assignment creation.
+- Student submission.
+- Teacher checking.
+- Feedback.
+- Late submission handling.
+
+### Phase 9 — My School Day
+- Daily timeline.
+- Period updates.
+- End-of-day reports.
+- Backdated entries.
+- Edit history timestamps.
+- Substitute teacher support.
+- Missing-period indicators.
+
+### Phase 10 — Leave Management
+- Parent leave applications.
+- Teacher approval/rejection.
+- Attendance integration.
+- Duplicate prevention.
+- Multi-day leave.
+
+### Phase 11 — Exams and Results
+- Test scheduling.
+- Marks entry.
+- Student results.
+- Parent result view.
+- Academic reports.
+
+### Phase 12 — Final QA and Polish
+- Complete integration testing.
+- Responsive UI testing.
+- Light/dark theme testing.
+- Browser refresh testing.
+- Persistence testing.
+- Data integrity testing.
+- Bug fixing.
+- Final Flutter Web build.
+- Chrome verification.
+
+Each phase must be completed and verified before moving to the next.
+
+---
+
+# 17. TESTING REQUIREMENTS
+
+Do not consider the application complete simply because it compiles.
+
+### Unit Tests
+Test:
+- Domain entities.
+- Serialization/deserialization.
+- Repository operations.
+- Business rules.
+- Attendance calculations.
+- Leave logic.
+- Homework statuses.
+- Parent-child relationships.
+- Delete restrictions.
+
+### Widget Tests
+Test:
+- Role selection.
+- Navigation.
+- Dashboards.
+- Forms.
+- Validation.
+- Dialogs.
+- Theme switching.
+- Responsive components.
+
+### Integration Tests
+Test important workflows:
+
+1. Select Parent role.
+2. Switch between two children.
+3. Verify child-specific attendance and homework.
+4. Select Teacher role.
+5. Mark attendance.
+6. Create homework.
+7. Update My School Day.
+8. Select Student role.
+9. Submit homework.
+10. View teacher feedback.
+11. Select Admin role.
+12. Add a student.
+13. Assign a teacher.
+14. Create a holiday.
+15. Publish an announcement.
+16. Verify relevant information appears in other roles.
+17. Refresh the browser.
+18. Confirm saved data remains.
+19. Reset demo data.
+20. Confirm original seed data is restored.
+
+### Final Verification
+
+Run:
+
+- dart format
+- flutter analyze
+- flutter test
+- flutter build web
+
+Resolve errors and relevant warnings.
+
+Verify the application manually in Chrome at mobile, tablet, and desktop widths.
+
+---
+
+# 18. PERFORMANCE AND CODE QUALITY
+
+The target environment may have limited hardware and low connectivity.
+
+Therefore:
+
+- Keep dependencies lightweight.
+- Avoid unnecessary animations.
+- Avoid large image assets.
+- Avoid unnecessary rebuilds.
+- Use efficient list rendering.
+- Avoid expensive computations inside build methods.
+- Keep the app responsive.
+- Do not make network calls.
+- Keep the code readable and maintainable.
+
+Use clear names, small focused files, and appropriate comments.
+
+Do not over-engineer.
+
+---
+
+# 19. STRICT CODING AGENT RULES
+
+These rules are mandatory.
+
+1. Inspect the repository before implementation.
+2. Read existing project instructions such as AGENTS.md.
+3. Read the requirements document if it exists.
+4. Identify existing functionality before changing anything.
+5. Work only on the approved task and file scope.
+6. Do not modify unrelated files.
+7. Do not delete, rename, or move files without explicit approval.
+8. Do not install packages without approval.
+9. Do not modify project configuration without approval.
+10. Do not change routing, authentication, backend, or app-wide architecture unexpectedly.
+11. Do not overwrite working functionality.
+12. Do not silently ignore failing tests.
+13. Do not claim that a feature works without verifying it.
+14. Report all modified and created files.
+15. Report any deviation from the approved plan.
+16. Stop and ask if an important requirement cannot be implemented safely within scope.
+
+### Approval Workflow
+
+Before each development task:
+
+1. Inspect relevant files.
+2. Explain what will be implemented.
+3. List exact files to create or modify.
+4. Explain any dependency changes.
+5. Explain any architecture changes.
+6. Wait for approval.
+7. Implement only the approved scope.
+8. Run relevant tests and analysis.
+9. Report results.
+10. Proceed to the next task only after approval.
+
+Do not interpret approval for one task as approval for every future task.
+
+---
+
+# 20. DEFINITION OF DONE
+
+MERI SCHOOL DIARY V1 is complete only when:
+
+- All four roles work.
+- Each role has its own dashboard and navigation.
+- Parent child switching works correctly.
+- Admin can manage school structure.
+- Teachers can manage attendance.
+- Teachers can create and check homework.
+- Students can submit homework.
+- My School Day works as an actual daily timeline.
+- Tests and results work.
+- Leave application and approval work.
+- Announcements work.
+- Calendar and holidays work.
+- Data persists after browser refresh.
+- Reset demo data works.
+- Business rules and validations are enforced.
+- Light and dark themes work.
+- Mobile, tablet, and desktop layouts work.
+- No prohibited backend or AI integrations exist.
+- Unit, widget, and integration tests pass.
+- Flutter Web builds successfully.
+- Chrome manual verification is completed.
+- No known critical or high-severity bugs remain.
+
+---
+
+# FINAL INSTRUCTION
+
+Build **MERI SCHOOL DIARY** as a complete, functional, well-structured, responsive Flutter application.
+
+Think like a senior software engineer, not just a code generator.
+
+Prioritize:
+1. Correct business logic.
+2. Reliable data relationships.
+3. Simple user experience.
+4. Clean architecture.
+5. Functional features.
+6. Responsive design.
+7. Testing and stability.
+8. Maintainability.
+
+Do not skip requirements, invent unapproved features, or replace functional workflows with static mockups.
+
+Start by inspecting the existing project and preparing a development plan. Do not modify files until the first implementation task and its exact file scope have been approved.
+
+The final result must be a usable digital school diary, not merely a collection of attractive screens.
